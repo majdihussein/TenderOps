@@ -1,0 +1,58 @@
+﻿@model TenderOps_Web.Models.VM.InvoiceCreateVM
+
+<form asp-action="CreateInvoice">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-primary">Create Invoice</h1>
+        <hr />
+
+        <div class="row">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="col-2">
+                <label asp-for="InvoiceCreateDTO.InvoiceNumber" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="InvoiceCreateDTO.InvoiceNumber" class="form-control" />
+                <span asp-validation-for="InvoiceCreateDTO.InvoiceNumber" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="InvoiceCreateDTO.Amount" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="InvoiceCreateDTO.Amount" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="InvoiceCreateDTO.Amount" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="InvoiceCreateDTO.Notes" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="InvoiceCreateDTO.Notes" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="InvoiceCreateDTO.Notes" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="TenderList" class="control-label pt-2" style="font-size:20px;">Tender</label>
+            </div>
+            <div class="col-10 pb-3">
+                <select asp-for="InvoiceCreateDTO.TenderId" class="form-select" asp-items="Model.TenderList">
+                    <option disabled selected>-- Select Tender --</option>
+                </select>
+                <span asp-validation-for="InvoiceCreateDTO.TenderId" class="text-danger"></span>
+            </div>
+
+            <div class="col-5 offset-2">
+                <a asp-action="IndexInvoice" asp-controller="Invoice" class="btn-primary btn form-control">Back To Invoice List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Create" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

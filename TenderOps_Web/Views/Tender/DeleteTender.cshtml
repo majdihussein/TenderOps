@@ -1,0 +1,72 @@
+﻿@model TenderOps_Web.Models.Dto.TenderDTO
+
+<form asp-action="DeleteTender">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-primary">Delete Tender</h1>
+        <hr />
+
+        <input hidden asp-for="Id" />
+        <div class="row">
+            <div class="col-2">
+                <label asp-for="TenderName" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderName" disabled class="form-control" />
+            </div>
+
+            <div class="col-2">
+                <label asp-for="TenderNumber" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderNumber" disabled class="form-control" />
+            </div>
+
+            <div class="col-2">
+                <label asp-for="Description" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="Description" disabled class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="Location" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Location" disabled class="form-control" />
+            </div>
+
+            <div class="col-2">
+                <label asp-for="TenderStartDate" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderStartDate" disabled class="form-control" type="date" />
+            </div>
+
+            <div class="col-2">
+                <label asp-for="TenderEndDate" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderEndDate" disabled class="form-control" type="date" />
+            </div>
+
+            <div class="col-2">
+                <label asp-for="TenderCategoryName" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderCategoryName" disabled class="form-control" />
+            </div>
+
+            <div class="col-5 offset-2">
+                <a asp-action="IndexTender" asp-controller="Tender" class="btn btn-primary form-control">Back To List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Delete" class="btn btn-danger form-control" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,59 @@
+﻿@using TenderOps_Utility
+@model IEnumerable<TenderOps_Web.Models.Dto.TenderDTO>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-primary">Available Tenders</h2>
+
+    @if (User.IsInRole(SD.superadmin))
+    {
+        <!-- أزرار الإدارة -->
+        <div class="mb-4 d-flex flex-wrap gap-3 justify-content-center">
+            <a asp-controller="Tender" asp-action="CreateTender" class="btn btn-success rounded-3">
+                <i class="bi bi-plus-circle me-1"></i> Add New Tender
+            </a>
+            <a asp-controller="Invoice" asp-action="CreateInvoice" class="btn btn-warning text-dark rounded-3">
+                <i class="bi bi-receipt me-1"></i> Add New Invoice
+            </a>
+            <a asp-controller="Partner" asp-action="CreatePartner" class="btn btn-info text-white rounded-3">
+                <i class="bi bi-person-plus me-1"></i> Add New Partner
+            </a>
+            <a asp-controller="TenderCategory" asp-action="CreateTenderCategory" class="btn btn-secondary rounded-3">
+                <i class="bi bi-tags me-1"></i> Add New Category
+            </a>
+        </div>
+
+
+    }
+    else
+    {
+        <!-- قائمة التندرات لغير السوبر أدمن -->
+        <div class="row g-4">
+            @foreach (var tender in Model)
+            {
+                <div class="col-12">
+                    <div class="p-4 shadow rounded-4 border border-light bg-light">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-dark mb-2">
+                                    <i class="bi bi-file-earmark-text-fill me-2 text-primary"></i>
+                                    <strong>@tender.TenderName</strong>
+                                </h5>
+                                <p class="mb-1"><strong>Tender Number:</strong> @tender.TenderNumber</p>
+                                <p class="mb-1"><strong>Location:</strong> @tender.Location</p>
+                                <p class="mb-1"><strong>Partner:</strong> @tender.PartnerName</p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Start At:</strong> @tender.TenderStartDate?.ToString("yyyy-MM-dd")</p>
+                                <p class="text-danger"><strong>DeadLine:</strong> @tender.TenderEndDate?.ToString("yyyy-MM-dd")</p>
+                                <a href="#" class="btn btn-outline-primary mt-2 float-end">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

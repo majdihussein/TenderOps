@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TenderOps_Web.Models.Dto.InvoiceDTO>
+
+<br />
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Invoice List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-controller="Invoice" asp-action="CreateInvoice" class="btn btn-outline-primary">
+                <i class="bi bi-file-plus-fill"></i> Create New Invoice
+            </a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Tender Name</th>
+                <th>Created By</th> <!-- هنا نعرض اسم من أنشأ الفاتورة -->
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Invoice Date</th>
+                <th></th> <!-- للأزرار -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.InvoiceNumber</td>
+                    <td>@item.TenderName</td>
+                    <td>@item.UserFullName</td> <!-- عرض اسم المستخدم -->
+                    <td>@item.Amount.ToString("c")</td>
+                    <td>@item.Status</td>
+                    <td>@item.InvoiceDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (User.IsInRole("superadmin"))
+                        {
+                            <a asp-controller="Invoice" asp-action="UpdateInvoice" asp-route-invoiceId="@item.InvoiceId" class="btn btn-success">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-controller="Invoice" asp-action="DeleteInvoice" asp-route-invoiceId="@item.InvoiceId" class="btn btn-danger">
+                                <i class="bi bi-trash3-fill"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

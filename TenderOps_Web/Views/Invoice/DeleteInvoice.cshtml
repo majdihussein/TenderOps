@@ -1,0 +1,21 @@
+﻿@model TenderOps_Web.Models.Dto.InvoiceDTO
+
+<form asp-action="DeleteInvoice" method="post">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-danger">Confirm Delete Invoice</h1>
+        <hr />
+        <input type="hidden" asp-for="InvoiceId" />
+
+        <div class="row">
+            <div class="col-6 offset-3">
+                <input type="submit" value="Delete" class="btn btn-danger form-control mb-2" />
+                <a asp-action="IndexInvoice" asp-controller="Invoice" class="btn btn-secondary form-control">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

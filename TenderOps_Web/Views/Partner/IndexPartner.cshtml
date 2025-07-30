@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TenderOps_Web.Models.Dto.PartnerDTO>
+
+@using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+
+@{
+    ViewData["Title"] = "Partner";
+
+    bool isSuperAdmin = HttpContextAccessor.HttpContext.User.IsInRole("superadmin");
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Partner List</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+
+    @if (Model != null && Model.Any())
+    {
+        @if (isSuperAdmin)
+        {
+            <!-- عرض الجدول للسوبر أدمن -->
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 10%;">#</th>
+                        <th style="width: 30%;">Name</th>
+                        <th style="width: 40%;">Description</th>
+                        <th style="width: 20%;">Website</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@(string.IsNullOrWhiteSpace(item.Description) ? "-" : item.Description)</td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.Website))
+                                {
+                                    <a href="@item.Website" target="_blank">@item.Website</a>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <a asp-controller="Partner" asp-action="CreatePartner" class="btn btn-success mt-3">
+                <i class="bi bi-plus-circle me-1"></i> Add New Partner
+            </a>
+        }
+        else
+        {
+            <!-- عرض البطاقات للادمن والزائر -->
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var partner in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">
+                                    <a class="text-decoration-none">
+                                        @partner.Name
+                                    </a>
+
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">No partners found.</div>
+    }
+</div>

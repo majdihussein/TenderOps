@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TenderOps_Web.Models.Dto.TenderDTO>
+
+<br />
+<div class="container p-4 border rounded">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Tender List</h1>
+        </div>
+        <div class="col text-end pt-1">
+            <a asp-controller="Tender" asp-action="CreateTender" class="btn btn-outline-primary">
+                <i class="bi bi-file-plus-fill"></i> Create New Tender
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Tender Name</th>
+                <th>Tender Number</th>
+                <th>Location</th>
+                <th>Company Name</th>  <!-- هنا ضفت العمود -->
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TenderName</td>
+                    <td>@item.TenderNumber</td>
+                    <td>@item.Location</td>
+                    <td>@item.PartnerName</td> <!-- ✅ عرض اسم الشركة (الشريك) -->
+                    <td>@item.TenderStartDate?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.TenderEndDate?.ToString("yyyy-MM-dd")</td>
+                    @if (User.IsInRole("superadmin"))
+                    {
+                        <td class="text-center">
+                            <a asp-controller="Tender" asp-action="UpdateTender" asp-route-tenderId="@item.Id" class="btn btn-success me-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-controller="Tender" asp-action="DeleteTender" asp-route-tenderId="@item.Id" class="btn btn-danger">
+                                <i class="bi bi-trash3-fill"></i>
+                            </a>
+                        </td>
+                    }
+                    else if (User.IsInRole("admin"))
+                    {
+                        <td class="text-center">
+                            <a asp-controller="Tender" asp-action="UpdateTender" asp-route-tenderId="@item.Id" class="btn btn-success me-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

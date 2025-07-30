@@ -1,0 +1,117 @@
+﻿@using TenderOps_Utility
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpAcc
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TenderOps_Web</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/bootstap2.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TenderOps_Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+	<partial name="_notification" />
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow my-1">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TenderOps_Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if (User.IsInRole(SD.superadmin))
+                                {
+                                    <span>Admin Panel (Superadmin)</span>
+                                }
+                                else if (User.IsInRole(SD.Admin))
+                                {
+                                    <span>Content Management (Admin)</span>
+                                }
+                                else
+                                {
+                                    <span>Tenders</span>
+                                }
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @if (User.IsInRole(SD.superadmin) || User.IsInRole(SD.Admin))
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Tender" asp-action="IndexTender">Tender</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Invoice" asp-action="IndexInvoice">Invoice</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Partner" asp-action="IndexPartner">Partner</a></li>
+                                    }
+
+                                    @if (User.IsInRole(SD.superadmin))
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="TenderCategory" asp-action="IndexTenderCategory">Category</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Register">Register</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Tender" asp-action="IndexTender">Tender</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Partner" asp-action="IndexPartner">Partner</a></li>
+                                }
+
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hello, @User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div class="container">
+            &copy; 2025 - TenderOps_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

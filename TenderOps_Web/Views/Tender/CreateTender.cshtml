@@ -1,0 +1,122 @@
+﻿@using static TenderOps_Utility.SD
+@model TenderOps_Web.Models.Dto.TenderCreateDTO
+
+<form asp-action="CreateTender" enctype="multipart/form-data">
+    <br />
+    <div class="container border p-4 rounded">
+        <h1 class="text-primary">Create Tender</h1>
+        <hr />
+
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Tender Name -->
+            <div class="col-2">
+                <label asp-for="TenderName" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderName" class="form-control" />
+                <span asp-validation-for="TenderName" class="text-danger"></span>
+            </div>
+
+            <!-- Tender Number -->
+            <div class="col-2">
+                <label asp-for="TenderNumber" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderNumber" class="form-control" />
+                <span asp-validation-for="TenderNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Location -->
+            <div class="col-2">
+                <label asp-for="Location" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <select asp-for="Location" class="form-select" asp-items="Html.GetEnumSelectList<TenderLocation>()">
+                    <option value="">-- Location --</option>
+                </select>
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="col-2">
+                <label asp-for="Description" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <!-- Status -->
+            <div class="col-2">
+                <label asp-for="Status" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="Status" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-2">
+                <label asp-for="TenderStartDate" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderStartDate" class="form-control" type="date" />
+                <span asp-validation-for="TenderStartDate" class="text-danger"></span>
+            </div>
+
+            <!-- End Date -->
+            <div class="col-2">
+                <label asp-for="TenderEndDate" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="TenderEndDate" class="form-control" type="date" />
+                <span asp-validation-for="TenderEndDate" class="text-danger"></span>
+            </div>
+
+            <!-- Category Dropdown -->
+            <div class="col-2">
+                <label asp-for="TenderCategoryId" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <select asp-for="TenderCategoryId" class="form-select" asp-items="ViewBag.CategoryList">
+                    <option disabled selected>-- Select Category --</option>
+                </select>
+                <span asp-validation-for="TenderCategoryId" class="text-danger"></span>
+            </div>
+
+            <!-- Partner Dropdown -->
+            <div class="col-2">
+                <label asp-for="PartnerId" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <select asp-for="PartnerId" class="form-select" asp-items="ViewBag.PartnerList">
+                    <option disabled selected>-- Select Partner --</option>
+                </select>
+                <span asp-validation-for="PartnerId" class="text-danger"></span>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="col-2">
+                <label asp-for="Image" class="control-label pt-2" style="font-size:18px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Image" class="form-control" type="file" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="col-5 offset-2">
+                <a asp-action="IndexTender" asp-controller="Tender" class="btn btn-secondary form-control">Back To List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Create" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
